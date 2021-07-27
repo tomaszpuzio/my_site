@@ -19,11 +19,12 @@
 
 <section id="welcome">
     <header>
-        <img src="Tomasz - Author Of This Blog" />
+        <img src="{% static "blog/images/tomasz.jpg" %}"alt="Tomasz - Author Of This Blog" />
         <h2>TOMASZ'S BLOG</h2>
     </header>
     <p>Hi, I am Tomasz and I am very excited to present you my first blog built up with Django!</p>
 </section>
+
 <section id="latest-posts">
     <h2>My latest Thoughts</h2>
 
@@ -31,7 +32,7 @@
         <li>
         <article class="post">
             <a hef="">
-                <img src="" alt="Mountain Hiking" />
+                <img src="{% static "blog/images/mountains.jpg"%}" alt="Mountain Hiking" />
                 <div class="post__content">
                     <h3>Mountain Hiking</h3>
                     <p>Amazin views!</p>
