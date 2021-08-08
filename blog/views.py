@@ -1,75 +1,25 @@
 from datetime import date
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-all_posts = [
-    {
-        "slug": "hike-in-the-mountains",
-        "image": "mountains.jpg",
-        "author": "Tomasz",
-        "date": date(2021,7,21),
-        "title": "Mountain Hiking",
-        "excerpt": "Beautiful vies in the mountains",
-        "content": """
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
+from .models import Post
 
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
-
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
-        """
-    },
-    {
-        "slug": "funny",
-        "image": "coding.jpg",
-        "author": "Tomasz",
-        "date": date(2021,7,15),
-        "title": "Funny things about coding",
-        "excerpt": "Coding is great",
-        "content": """
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
-
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
-
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Possimus, eum magnam! Ipsum voluptate ad libero, quam tempora rem? 
-            Error, explicabo aliquam deserunt quis nihil iusto reiciendis nemo 
-            ratione suscipit corrupti.
-        """
-    }
-]
-
-def get_date(post):
-    return post["date"]
 
 def starting_page(request):
-    sorted_posts = sorted(all_posts, key=get_date)
-    latest_posts = sorted_posts[-3:]
+    latest_posts = Post.objects.all().order_by("-date")[:3]
     return render(request, "blog/index.html", {
         "posts": latest_posts
     })
 
 def posts(request):
+    all_posts = Post.objects.all().order_by("-date")
     return render(request, "blog/all-posts.html", {
         "all_posts": all_posts
     })
 
 def post_detail(request, slug):
-    identified_post = next(post for post in all_posts if post["slug"] == slug)
+    identified_post = get_object_or_404(Post, slug=slug)
     return render(request, "blog/post-detail.html", {
-        "post": identified_post
+        "post": identified_post,
+        "post_tags": identified_post.tags.all()
     })
