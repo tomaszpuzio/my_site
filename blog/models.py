@@ -26,7 +26,7 @@ class Post(models.Model):
     author = ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name="posts")
     title = CharField(max_length=150)
     excerpt = CharField(max_length=200)
-    image_name = CharField(max_length=100)
+    image = models.ImageField(upload_to="posts", null=True)
     date = DateField(auto_now=True)
     slug = SlugField(unique=True, db_index=True)
     tags = ManyToManyField(Tag)
