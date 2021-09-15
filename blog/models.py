@@ -32,3 +32,9 @@ class Post(models.Model):
     tags = ManyToManyField(Tag)
     content = TextField(validators=[MinLengthValidator(10)])
 
+class Comment(models.Model):
+    user_name = CharField(max_length=120)
+    user_email = EmailField()
+    text = TextField(max_length=400)
+    post = ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+
