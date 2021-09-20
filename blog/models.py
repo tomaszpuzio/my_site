@@ -32,6 +32,9 @@ class Post(models.Model):
     tags = ManyToManyField(Tag)
     content = TextField(validators=[MinLengthValidator(10)])
 
+    def __str__(self):
+        return f"{self.title}"
+
 class Comment(models.Model):
     user_name = CharField(max_length=120)
     user_email = EmailField()
