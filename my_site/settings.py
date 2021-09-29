@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'blog',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'type_user_name',
-        'PASSWORD': 'type_password',
+        'USER': 'djangoblog',
+        'PASSWORD': 'qwerty12345',
         'HOST': 'django-blog.cocf4lwqjq4b.eu-west-3.rds.amazonaws.com',
         'PORT': '5432'
     }
@@ -140,3 +141,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
+
+AWS_STORAGE_BUCKET_NAME = 'django-blog-course3'
+AWS_S3_REGION_NAME = "eu-west-3"
+AWS_ACCESS_KEY_ID = "YOUR_AWS_KEY"
+AWS_SECRET_ACCESS_KEY = "YOUR_AWS_SECRET_KEY"
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+STATICFILES_FOLDER = "static"
+MEDIAFILES_FOLDER = "media"
+
+STATICFILES_STORAGE = "custom_storages.StaticFilesStorage"
+DEFAULT_FILE_STORAGE = "custom_storages.MediaFilesStorage"
